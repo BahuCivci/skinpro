@@ -1,0 +1,46 @@
+# YOLOv8 segmentation model config tailored for facial lesion detection.
+# See https://docs.ultralytics.com/modes/train/ for full parameter list.
+
+nc: 8  # number of lesion classes
+names: [milia, whitehead, blackhead, papule, pustule, cyst, hyperpigmentation, scar]
+
+backbone:
+  type: CSPDarknet
+  depth_mul: 0.67
+  width_mul: 0.75
+  act: silu
+
+head:
+  type: YOLOv8SegHead
+  depth_mul: 0.67
+  width_mul: 0.75
+
+train:
+  lr0: 0.0008
+  lrf: 0.01
+  momentum: 0.937
+  weight_decay: 0.0005
+  warmup_epochs: 3.0
+  warmup_momentum: 0.8
+  warmup_bias_lr: 0.1
+  box: 7.5
+  cls: 0.9
+  dfl: 1.5
+  seg: 0.8
+  hsv_h: 0.03
+  hsv_s: 0.4
+  hsv_v: 0.3
+  degrees: 5.0
+  translate: 0.05
+  scale: 0.25
+  shear: 0.0
+  perspective: 0.0
+  flipud: 0.0
+  fliplr: 0.5
+  mosaic: 0.7
+  mixup: 0.15
+
+val:
+  iou: 0.6
+  conf: 0.25
+  max_det: 300

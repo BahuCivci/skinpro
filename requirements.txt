@@ -1,0 +1,10 @@
+streamlit
+Pillow
+numpy
+onnxruntime
+opencv-python-headless
+transformers
+torch
+torchvision
+scikit-learn
+roboflow

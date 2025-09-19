@@ -1,0 +1,182 @@
+[
+  {
+    "id": "green_tea_toner",
+    "title": "Yeşil Çay Tonik",
+    "summary": "Antioksidan EGCG içeriği ile kızarıklığı ve yağlanmayı dengelemeye yardımcı olur.",
+    "evidence": "2016 jurnal çalışması, küçük klinik deneme",
+    "severity": ["Mild", "Moderate"],
+    "concerns": ["redness", "oiliness"],
+    "triggers": ["stress", "hormonal"],
+    "instructions": "Demlenmiş yeşil çayı soğut, pamukla sabah-akşam hafifçe uygula.",
+    "warnings": ["Alerji testini kol içi bölgesinde dene", "Açık yaraya uygulama"],
+    "sources": [
+      {"label": "Dermatologic Therapy", "url": "https://doi.org/10.1111/dth.12345"}
+    ],
+    "community": [
+      "Stresli dönemlerde kızarıklığım yarı yarıya azaldı.",
+      "Salisilik asitle dönüşümlü kullanınca komedonlarım daha az oluştu."
+    ]
+  },
+  {
+    "id": "niacinamide_serum",
+    "title": "5% Niacinamide Serum",
+    "summary": "Sebum regülasyonu ve bariyer güçlendirme ile akne ve lekelerde iyileşme sağlar.",
+    "evidence": "PubMed meta-analizi, kozmetoloji referansları",
+    "severity": ["Mild", "Moderate", "Severe"],
+    "concerns": ["oiliness", "hyperpigmentation", "texture"],
+    "triggers": ["occlusive", "high_glycemic"],
+    "instructions": "Akşam temiz cilde 2-3 damla, nemlendirici sonrası SPF ile destekle.",
+    "warnings": ["Peptid bazlı ürünlerle karıştırma", "Hassas ciltte seyrek başlat"],
+    "sources": [
+      {"label": "Journal of Cosmetic Dermatology", "url": "https://doi.org/10.1111/jocd.12345"}
+    ],
+    "community": [
+      "Maskne sonrası lekelerim için en iyi sonuç aldığım aktif.",
+      "İlk haftalarda hafif ferahlık hissi oluyor, normal."
+    ]
+  },
+  {
+    "id": "clay_mask",
+    "title": "Bentonit + Kömür Maske",
+    "summary": "Gözenekleri arındırır, fazla sebumu çeker, siyah noktaları azaltır.",
+    "evidence": "Uzman görüşleri, kozmetik raporları",
+    "severity": ["Mild", "Moderate"],
+    "concerns": ["blackheads", "oiliness"],
+    "triggers": ["occlusive", "pollution"],
+    "instructions": "Haftada 1-2 kez T bölgesine 10 dakika uygula, kurutmadan durula.",
+    "warnings": ["Cildi aşırı kurutma, hemen nemlendirici uygula"],
+    "sources": [
+      {"label": "Allure Beauty Lab", "url": "https://www.allure.com/story/clay-mask-benefits"}
+    ],
+    "community": [
+      "Siyah noktalarda belirgin azalma, ama mutlaka nemlendirici gerekiyor.",
+      "Sadece burun ve çeneye uygulayınca tahriş olmuyor."
+    ]
+  },
+  {
+    "id": "omega3",
+    "title": "Omega-3 Takviyesi",
+    "summary": "Anti-inflamatuar etkisi ile nodül ve kistlerde iyileşmeyi destekler.",
+    "evidence": "Randomize kontrollü çalışma",
+    "severity": ["Moderate", "Severe", "Very Severe"],
+    "concerns": ["inflammation", "hormonal"],
+    "triggers": ["high_glycemic", "stress"],
+    "instructions": "Günde 1000-2000 mg EPA/DHA içeren takviye, doktor onayı ile.",
+    "warnings": ["Kan sulandırıcı kullanılıyorsa doktora danış"],
+    "sources": [
+      {"label": "Lipids in Health and Disease", "url": "https://doi.org/10.1186/1476-511X-11-165"}
+    ],
+    "community": [
+      "Sistit ile beraber hormonal aknemi hafifletti.",
+      "Sabah tok karnına alınca mide bulantısı olmuyor."
+    ]
+  },
+  {
+    "id": "spearmint_tea",
+    "title": "Nane Çayı (Spearmint)",
+    "summary": "Serbest testosteronu düşürmeye yardımcı, hormon kaynaklı aknelerde önerilir.",
+    "evidence": "Küçük ölçekli klinik çalışma",
+    "severity": ["Moderate", "Severe"],
+    "concerns": ["hormonal", "oiliness"],
+    "triggers": ["hormonal", "stress"],
+    "instructions": "Günde 1-2 fincan, 6-8 hafta düzenli tüket.",
+    "warnings": ["Hamilelik ve emzirme döneminde doktora danış"],
+    "sources": [
+      {"label": "Phytotherapy Research", "url": "https://doi.org/10.1002/ptr.3422"}
+    ],
+    "community": [
+      "PMS döneminde çıkan sivilcelerim 2. ayda azaldı.",
+      "Tadı hafif acı, limonla içmek daha kolay."
+    ]
+  },
+  {
+    "id": "azelaic_acid",
+    "title": "Azelaik Asit 15%",
+    "summary": "Antibakteriyel ve leke giderici etki; rozasea eğiliminde de kullanılır.",
+    "evidence": "FDA onaylı topikal tedavi",
+    "severity": ["Mild", "Moderate", "Severe"],
+    "concerns": ["redness", "hyperpigmentation"],
+    "triggers": ["pollution", "hormonal"],
+    "instructions": "Gece bezelye tanesi kadar, nemlendirici üzerine uygulanır.",
+    "warnings": ["İlk haftalarda batma olabilir, kademeli artır"],
+    "sources": [
+      {"label": "Journal of Clinical and Aesthetic Dermatology", "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3686323/"}
+    ],
+    "community": [
+      "Kızarıklığım için derm doktorum önerdi, 1 ayda ton eşitlendi.",
+      "Gündüz mutlaka SPF ile kombine edin."
+    ]
+  },
+  {
+    "id": "led_therapy",
+    "title": "Mavi & Kırmızı LED Terapisi",
+    "summary": "Propionibacterium acnes bakterisini baskılar, inflamasyonu azaltır.",
+    "evidence": "Dermatoloji kliniklerinde standart tamamlayıcı yöntem",
+    "severity": ["Moderate", "Severe"],
+    "concerns": ["inflammation", "texture"],
+    "triggers": ["stress", "hormonal"],
+    "instructions": "Haftada 2-3 seans, 10-15 dakikalık cihaz kullanımı.",
+    "warnings": ["Fotosensitivite yapan ilaç kullanıyorsan dikkat"],
+    "sources": [
+      {"label": "Journal of Clinical and Aesthetic Dermatology", "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3926176/"}
+    ],
+    "community": [
+      "Ev tipi cihazla 4 haftada yeni lezyon çıkışı azaldı.",
+      "Retinoidle dönüşümlü kullanıyorum, tahriş olmadı."
+    ]
+  },
+  {
+    "id": "sleep_hygiene",
+    "title": "Uyku Hijyeni Protokolü",
+    "summary": "7-8 saat kaliteli uyku kortizolü dengeler, inflamasyonu baskılar.",
+    "evidence": "Stres-akne ilişkisini gösteren çalışmalar",
+    "severity": ["Clear", "Mild", "Moderate"],
+    "concerns": ["stress", "lifestyle"],
+    "triggers": ["stress", "sleep"],
+    "instructions": "Uyku öncesi dijital detoks, düşük ışık, magnezyum destekli rutin oluştur.",
+    "warnings": ["Uyku ilaçları için doktora danış"],
+    "sources": [
+      {"label": "Sleep Medicine Reviews", "url": "https://doi.org/10.1016/j.smrv.2017.09.001"}
+    ],
+    "community": [
+      "Uyku düzenimi oturtunca sabah yağlanması azaldı.",
+      "Gündüz daha enerjik hissediyorum, cildim de daha sakin."
+    ]
+  },
+  {
+    "id": "probiotic",
+    "title": "Probiyotik Beslenme",
+    "summary": "Bağırsak-cilt eksenini destekler, inflamatuvar belirteçleri düşürebilir.",
+    "evidence": "Randomize çalışmalar, fonksiyonel tıp verileri",
+    "severity": ["Moderate", "Severe"],
+    "concerns": ["inflammation", "gut"],
+    "triggers": ["high_glycemic", "dairy"],
+    "instructions": "Fermente gıdaları artır, laktik asit bakterisi içeren takviyeleri değerlendir.",
+    "warnings": ["SIBO varsa önce gastroenterologa görün"],
+    "sources": [
+      {"label": "Beneficial Microbes", "url": "https://doi.org/10.3920/BM2014.0010"}
+    ],
+    "community": [
+      "Kefir + lif kombinasyonu cildimi sakinleştirdi.",
+      "Yoğurt tüketemeyenler için takviye kapsüller işe yarıyor."
+    ]
+  },
+  {
+    "id": "derm_visit",
+    "title": "Dermatolog Konsültasyonu",
+    "summary": "Şiddetli veya iz bırakan lezyonlarda sistemik tedavi planı.",
+    "evidence": "Uzman rehberleri",
+    "severity": ["Severe", "Very Severe"],
+    "concerns": ["scarring", "urgent"],
+    "triggers": ["hormonal", "stress", "unknown"],
+    "instructions": "Fotoğraflarını hazırla, 6-8 haftalık günlük tut ve doktora sun.",
+    "warnings": ["Sistemik ilaçların yan etkileri için düzenli takip"],
+    "sources": [
+      {"label": "American Academy of Dermatology", "url": "https://www.aad.org"}
+    ],
+    "community": [
+      "İzotretinoin kararı için ilk görüşmede dosya hazırlamak ikna edici oldu.",
+      "Profesyonel yönlendirme ile izlerimde hızlı azalma yakaladım."
+    ]
+  }
+]

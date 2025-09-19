@@ -1,0 +1,13 @@
+train: ../datasets/skin_problems/train/images
+val: ../datasets/skin_problems/valid/images
+test: ../datasets/skin_problems/test/images
+
+nc: 17
+names: ['Acne', 'Blackheads', 'Dark-Spots', 'Dry-Skin', 'Englarged-Pores', 'Eyebags', 'Nodules', 'Normal-Skin', 'Oily-Skin', 'Papules', 'Skin-Redness', 'Whiteheads', 'Wrinkles', 'acne marks', 'acne scar', 'burned-skin', 'pustules']
+
+roboflow:
+  workspace: mta-jycu6
+  project: skin-problem-detection-relabel-kxrif
+  version: 2
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/mta-jycu6/skin-problem-detection-relabel-kxrif/dataset/2

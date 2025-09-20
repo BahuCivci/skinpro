@@ -103,5 +103,22 @@ python -m streamlit run app.py
   python scripts/test_api.py path/to/photo.jpg
   ```
 
+## 8. Mobil (Expo/React Native) İstemci
+- `mobile/` klasörü; Expo tabanlı temel uygulama iskeletini içerir.
+- API tabanı `EXPO_PUBLIC_API_BASE` değişkeni ile yönetilir (varsayılan `http://127.0.0.1:8000`).
+- Başlamak için:
+  ```bash
+  cd mobile
+  npm install      # veya pnpm/yarn
+  npx expo start   # localhost:8000 çalışan API'ye bağlanmak için aynı ağda olmalı
+  ```
+- Öne çıkan dosyalar:
+  - `App.tsx`: Stack navigasyonu (`Analyze -> Result -> Coach`).
+  - `src/api/client.ts`: `/analyze` ve `/coach` fetch fonksiyonları.
+  - `src/screens/AnalyzeScreen.tsx`: Fotoğraf seç/kamera + analiz çağrısı.
+  - `src/screens/ResultScreen.tsx`: AI çıktısı ve kutu overlay'i.
+  - `src/screens/CoachScreen.tsx`: profil formu, tavsiye isteği.
+
+
 ---
 Sorular veya yeni veri ile fine-tuning ihtiyacı oluşursa `detector/scripts/train_detector.py` ve `detector/scripts/eval_detector.py` script’lerini kullanarak süreci tekrarlayabilirsin.

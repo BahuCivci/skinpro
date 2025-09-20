@@ -76,5 +76,32 @@ python -m streamlit run app.py
 - `analysis_utils.py` – Görüntü işleme yardımcıları ve overlay çizimi.
 - `detector/` – YOLO eğitimi, veri indirme scriptleri, notlar.
 
+## 7. FastAPI Backend (Mobil/harici istemciler)
+- API servisi `api/server.py` içinde FastAPI ile tanımlandı.
+- Uçlar:
+  - `GET /health` → basit sağlık kontrolü.
+  - `POST /analyze` → `multipart/form-data` ile `file` alanı (görüntü). Yanıt: `analyze_image` çıktısı, `lesions.detector_overlay` alanı base64 PNG olarak dönüyor.
+  - `POST /coach` → JSON gövdesi: `{ "profile": {...}, "analysis": {...} }`. Yanıt: bakım planı, önerilen çözümler, güvenlik uyarıları, topluluk özetleri.
+- CORS varsayılan olarak tüm origin’lere açık; mobil/ web istemciler direkt çağırabilir.
+- Çalıştırmak için:
+  ```bash
+  uvicorn api.server:app --host 0.0.0.0 --port 8000
+  ```
+  (Docker/Cloud Run gibi ortamlarda `PORT` değişkenine göre ayarlayabilirsiniz.)
+- Hızlı test için:
+  ```bash
+  # Health ve root
+  curl http://localhost:8000/
+  curl http://localhost:8000/health
+
+  # Görüntü analizi
+  curl -X POST "http://localhost:8000/analyze" \
+       -F "file=@samples/face.jpg" \
+       -H "accept: application/json"
+
+  # CLI helper
+  python scripts/test_api.py path/to/photo.jpg
+  ```
+
 ---
 Sorular veya yeni veri ile fine-tuning ihtiyacı oluşursa `detector/scripts/train_detector.py` ve `detector/scripts/eval_detector.py` script’lerini kullanarak süreci tekrarlayabilirsin.

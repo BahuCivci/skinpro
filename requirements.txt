@@ -7,4 +7,7 @@ transformers
 torch
 torchvision
 scikit-learn
+fastapi
+uvicorn[standard]
+python-multipart
 roboflow

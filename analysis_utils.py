@@ -9,7 +9,7 @@ try:
 except Exception:  # pragma: no cover - optional dependency
     cv2 = None
 
-from PIL import Image
+from PIL import Image, ImageDraw
 
 
 def _ensure_cv() -> bool:
@@ -77,3 +77,23 @@ def compute_pore_proxy(img: Image.Image) -> float:
     blur = cv2.GaussianBlur(gray, (9, 9), 0)
     diff = cv2.absdiff(gray, blur)
     return float(diff.mean())
+
+
+def draw_detector_overlay(img: Image.Image, detections: List[Dict[str, float]]) -> Image.Image:
+    """Return a copy of the image with detector boxes rendered."""
+    if not detections:
+        return img
+    out = img.copy()
+    draw = ImageDraw.Draw(out)
+    for det in detections:
+        box = det.get("bbox_abs")
+        if not box:
+            continue
+        x1, y1, x2, y2 = box
+        label = det.get("label", "?")
+        conf = det.get("confidence", 0.0)
+        caption = f"{label} {conf:.2f}"
+        draw.rectangle([x1, y1, x2, y2], outline=(255, 0, 0), width=3)
+        text_y = y1 - 12 if y1 - 12 > 0 else y1 + 4
+        draw.text((x1 + 4, text_y), caption, fill=(255, 0, 0))
+    return out

@@ -64,6 +64,7 @@ with tab_analysis:
         lesions = result.get("lesions", {})
         regions = lesions.get("regions", [])
         detector_regions = lesions.get("detector_regions", [])
+        detector_overlay = lesions.get("detector_overlay")
         texture_score = lesions.get("texture_score", 0.0)
         pore_proxy = lesions.get("pore_proxy", 0.0)
 
@@ -116,6 +117,8 @@ with tab_analysis:
         if detector_regions:
             st.markdown("**Lesyon dedektörü**")
             st.write(f"Toplam {len(detector_regions)} tespit")
+            if detector_overlay is not None:
+                st.image(detector_overlay, caption="Lesyon tespitleri", use_container_width=True)
             preview = detector_regions[:5]
             for det in preview:
                 st.write(

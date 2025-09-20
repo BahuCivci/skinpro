@@ -13,10 +13,17 @@ from analysis_utils import (
     compute_redness_heatmap,
     compute_texture_score,
     detect_inflammation_regions,
+    draw_detector_overlay,
 )
 
 MODELS_DIR = os.path.join(os.path.dirname(__file__), "models")
 _LESION_MODEL_PATH = os.path.join(MODELS_DIR, "skin_lesion.onnx")
+_LESION_MODEL_PATH_PT = os.path.join(MODELS_DIR, "skin_lesion.pt")
+
+try:  # pragma: no cover
+    from ultralytics import YOLO
+except Exception:
+    YOLO = None
 
 # --- Optional ONNX backend ---------------------------------------------------
 try:
@@ -37,6 +44,11 @@ _HF_CANDIDATES = [mid for mid in [
 
 _DETECTOR_SESSION: Optional[Any] = None
 _DETECTOR_ERROR: Optional[str] = None
+_DETECTOR_MODEL: Optional[Any] = None
+_DETECTOR_MODEL_SOURCE: Optional[str] = None
+_DETECTOR_CLASS_NAMES: Optional[List[str]] = None
+_DETECTOR_CONF_THRES = float(os.environ.get("SKINPRO_DETECTOR_CONF", "0.30"))
+_DETECTOR_INPUT_SIZE = int(os.environ.get("SKINPRO_DETECTOR_SIZE", "1024"))
 
 SEVERITY_SCALE = ["Clear", "Mild", "Moderate", "Severe", "Very Severe"]
 _HF_LABEL_MAP = {
@@ -171,12 +183,83 @@ def _load_detector_session():
         return None
 
 
+def _load_detector_model():
+    global _DETECTOR_MODEL, _DETECTOR_ERROR, _DETECTOR_CLASS_NAMES, _DETECTOR_MODEL_SOURCE
+    if _DETECTOR_MODEL is not None:
+        return _DETECTOR_MODEL
+    if YOLO is None:
+        _DETECTOR_ERROR = "ultralytics not installed"
+        return None
+
+    for path in (_LESION_MODEL_PATH, _LESION_MODEL_PATH_PT):
+        if not os.path.isfile(path):
+            continue
+        try:
+            model = YOLO(path)
+            _DETECTOR_MODEL = model
+            _DETECTOR_MODEL_SOURCE = path
+            names = model.names
+            if isinstance(names, dict):
+                _DETECTOR_CLASS_NAMES = [names[k] for k in sorted(names.keys())]
+            elif isinstance(names, (list, tuple)):
+                _DETECTOR_CLASS_NAMES = list(names)
+            else:
+                _DETECTOR_CLASS_NAMES = None
+            _DETECTOR_ERROR = None
+            return _DETECTOR_MODEL
+        except Exception as exc:  # pragma: no cover
+            _DETECTOR_ERROR = str(exc)
+            _DETECTOR_MODEL = None
+    _DETECTOR_ERROR = "detector weights not found"
+    return None
+
+
 def _run_lesion_detector(img: Image.Image) -> List[Dict[str, Any]]:
-    session = _load_detector_session()
-    if session is None:
+    model = _load_detector_model()
+    if model is None:
         return []
-    # TODO: implement preprocessing, ONNX inference, and post-processing when the trained model is ready.
-    return []
+    try:
+        results = model.predict(img, imgsz=_DETECTOR_INPUT_SIZE, conf=_DETECTOR_CONF_THRES, max_det=150, verbose=False)
+    except Exception as exc:  # pragma: no cover
+        _DETECTOR_ERROR = str(exc)
+        return []
+
+    if not results:
+        return []
+
+    res = results[0]
+    boxes = getattr(res, "boxes", None)
+    if boxes is None or not len(boxes):
+        return []
+
+    width, height = img.size
+    cls_names = _DETECTOR_CLASS_NAMES or ["Acne", "Blackheads", "Dark-Spots", "Dry-Skin", "Englarged-Pores",
+                                         "Eyebags", "Nodules", "Normal-Skin", "Oily-Skin", "Papules",
+                                         "Skin-Redness", "Whiteheads", "Wrinkles", "acne marks",
+                                         "acne scar", "burned-skin", "pustules"]
+
+    dets: List[Dict[str, Any]] = []
+    xyxy = boxes.xyxy.cpu().numpy()
+    confs = boxes.conf.cpu().numpy()
+    classes = boxes.cls.cpu().numpy().astype(int)
+    for (x1, y1, x2, y2), conf, cls in zip(xyxy, confs, classes):
+        label = cls_names[cls] if cls < len(cls_names) else f"cls_{cls}"
+        x1, y1, x2, y2 = map(float, (x1, y1, x2, y2))
+        area = max(0.0, (x2 - x1) * (y2 - y1))
+        area_pct = area / (width * height) * 100.0
+        dets.append(
+            {
+                "label": label,
+                "confidence": float(conf),
+                "bbox": [x1 / width, y1 / height, x2 / width, y2 / height],
+                "bbox_abs": [x1, y1, x2, y2],
+                "area_pct": float(area_pct),
+                "class_id": int(cls),
+            }
+        )
+
+    dets.sort(key=lambda d: d["confidence"], reverse=True)
+    return dets[:10]
 
 
 def _ensemble_predictions(preds: List[SeverityPrediction]) -> Tuple[str, float]:
@@ -233,7 +316,7 @@ def analyze_image(pil_img: Image.Image) -> Dict[str, Any]:
                 "hf_errors": _HF_ERRORS,
                 "hf_models": [],
                 "ensemble": [],
-                "detector": {"error": _DETECTOR_ERROR, "model": _LESION_MODEL_PATH},
+                "detector": {"error": _DETECTOR_ERROR, "model": _DETECTOR_MODEL_SOURCE},
             },
             "lesions": {
                 "regions": detect_inflammation_regions(img),
@@ -260,12 +343,13 @@ def analyze_image(pil_img: Image.Image) -> Dict[str, Any]:
             "hf_errors": _HF_ERRORS,
             "hf_models": hf_models,
             "ensemble": [p.__dict__ for p in preds],
-            "detector": {"error": _DETECTOR_ERROR, "model": _LESION_MODEL_PATH, "count": len(detector_regions)},
+            "detector": {"error": _DETECTOR_ERROR, "model": _DETECTOR_MODEL_SOURCE, "count": len(detector_regions)},
         },
         "lesions": {
             "regions": detect_inflammation_regions(img),
             "texture_score": compute_texture_score(img),
             "pore_proxy": compute_pore_proxy(img),
             "detector_regions": detector_regions,
+            "detector_overlay": draw_detector_overlay(img, detector_regions) if detector_regions else None,
         },
     }

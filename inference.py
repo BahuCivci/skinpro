@@ -51,6 +51,7 @@ _DETECTOR_MODEL: Optional[Any] = None
 _DETECTOR_MODEL_SOURCE: Optional[str] = None
 _DETECTOR_CLASS_NAMES: Optional[List[str]] = None
 _DETECTOR_CONF_THRES = float(os.environ.get("SKINPRO_DETECTOR_CONF", "0.45"))
+_DETECTOR_MAX_RESULTS = int(os.environ.get("SKINPRO_DETECTOR_MAX", "10"))
 _DETECTOR_INPUT_SIZE = int(os.environ.get("SKINPRO_DETECTOR_SIZE", "1024"))
 
 SEVERITY_SCALE = ["Clear", "Mild", "Moderate", "Severe", "Very Severe"]
@@ -262,7 +263,7 @@ def _run_lesion_detector(img: Image.Image) -> List[Dict[str, Any]]:
         )
 
     dets.sort(key=lambda d: d["confidence"], reverse=True)
-    return dets[:10]
+    return dets[: _DETECTOR_MAX_RESULTS]
 
 
 def _ensemble_predictions(preds: List[SeverityPrediction]) -> Tuple[str, float]:

@@ -74,6 +74,11 @@ python -m streamlit run app.py
 - `app.py` – Streamlit ön yüzü (tabs, overlay görselleri, raporlar).
 - `inference.py` – ONNX/HF/YOLO modellerinin orkestrasyonu.
 - Varsayılan olarak şiddet sınıflandırması yalnızca yerel `models/severity_cls.onnx` dosyasına dayanır. Bu dosya yoksa heuristik fallback devreye girer. Hugging Face modellerini tekrar kullanmak isterseniz `SKINPRO_USE_HF=1` ortam değişkenini ayarlayın.
+- Lesyon kutularının sayısı ve eşiğini ayarlamak için:
+  ```bash
+  export SKINPRO_DETECTOR_CONF=0.2      # varsayılan 0.45
+  export SKINPRO_DETECTOR_MAX=50        # varsayılan 10
+  ```
 - `analysis_utils.py` – Görüntü işleme yardımcıları ve overlay çizimi.
 - `detector/` – YOLO eğitimi, veri indirme scriptleri, notlar.
 

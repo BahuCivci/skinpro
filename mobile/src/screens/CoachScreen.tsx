@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Alert, Button, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Alert, Button, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { requestCoach } from '@/api/client';
 import { useAnalysis } from '@/context/AnalysisContext';

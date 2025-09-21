@@ -47,7 +47,7 @@ _DETECTOR_ERROR: Optional[str] = None
 _DETECTOR_MODEL: Optional[Any] = None
 _DETECTOR_MODEL_SOURCE: Optional[str] = None
 _DETECTOR_CLASS_NAMES: Optional[List[str]] = None
-_DETECTOR_CONF_THRES = float(os.environ.get("SKINPRO_DETECTOR_CONF", "0.30"))
+_DETECTOR_CONF_THRES = float(os.environ.get("SKINPRO_DETECTOR_CONF", "0.45"))
 _DETECTOR_INPUT_SIZE = int(os.environ.get("SKINPRO_DETECTOR_SIZE", "1024"))
 
 SEVERITY_SCALE = ["Clear", "Mild", "Moderate", "Severe", "Very Severe"]

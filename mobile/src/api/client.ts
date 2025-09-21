@@ -38,7 +38,7 @@ const analysisSchema = z.object({
           })
         )
         .optional(),
-      detector_overlay: z.string().optional(),
+      detector_overlay: z.string().nullable().optional(),
     })
     .optional(),
   meta: z.record(z.any()).optional(),

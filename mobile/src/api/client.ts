@@ -41,7 +41,24 @@ const analysisSchema = z.object({
       detector_overlay: z.string().nullable().optional(),
     })
     .optional(),
-  meta: z.record(z.any()).optional(),
+  meta: z
+    .object({
+      detector: z
+        .object({
+          error: z.string().nullable().optional(),
+          model: z.string().nullable().optional(),
+          count: z.number().optional(),
+        })
+        .optional(),
+      image_size: z
+        .object({
+          width: z.number(),
+          height: z.number(),
+        })
+        .optional(),
+    })
+    .catchall(z.any())
+    .optional(),
 });
 
 const coachSchema = z.object({

@@ -13,7 +13,6 @@ from analysis_utils import (
     compute_redness_heatmap,
     compute_texture_score,
     detect_inflammation_regions,
-    draw_detector_overlay,
 )
 
 MODELS_DIR = os.path.join(os.path.dirname(__file__), "models")
@@ -321,13 +320,15 @@ def analyze_image(pil_img: Image.Image) -> Dict[str, Any]:
                 "hf_errors": _HF_ERRORS,
                 "hf_models": [],
                 "ensemble": [],
-                "detector": {"error": _DETECTOR_ERROR, "model": _DETECTOR_MODEL_SOURCE},
+                "detector": {"error": _DETECTOR_ERROR, "model": _DETECTOR_MODEL_SOURCE, "count": len(detector_regions)},
+                "image_size": {"width": img.width, "height": img.height},
             },
             "lesions": {
                 "regions": detect_inflammation_regions(img),
                 "texture_score": compute_texture_score(img),
                 "pore_proxy": compute_pore_proxy(img),
                 "detector_regions": detector_regions,
+                "detector_overlay": None,
             },
         }
 
@@ -349,12 +350,13 @@ def analyze_image(pil_img: Image.Image) -> Dict[str, Any]:
             "hf_models": hf_models,
             "ensemble": [p.__dict__ for p in preds],
             "detector": {"error": _DETECTOR_ERROR, "model": _DETECTOR_MODEL_SOURCE, "count": len(detector_regions)},
+            "image_size": {"width": img.width, "height": img.height},
         },
         "lesions": {
             "regions": detect_inflammation_regions(img),
             "texture_score": compute_texture_score(img),
             "pore_proxy": compute_pore_proxy(img),
             "detector_regions": detector_regions,
-            "detector_overlay": draw_detector_overlay(img, detector_regions) if detector_regions else None,
+            "detector_overlay": None,
         },
     }

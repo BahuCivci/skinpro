@@ -27,7 +27,11 @@ export const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route })
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scroll}>
         <Text style={styles.title}>Analiz Sonucu</Text>
-        <OverlayImage source={{ uri: photoUri }} overlayBase64={analysis.lesions?.detector_overlay} />
+        <OverlayImage
+          sourceUri={photoUri}
+          regions={analysis.lesions?.detector_regions}
+          imageSize={analysis.meta?.image_size as { width: number; height: number } | undefined}
+        />
         <View style={styles.card}>
           <Text style={styles.label}>Akne Şiddeti</Text>
           <Text style={styles.value}>{analysis.final_grade}</Text>

@@ -12,7 +12,13 @@ export type LesionReport = {
   texture_score?: number;
   pore_proxy?: number;
   detector_regions?: DetectorRegion[];
-  detector_overlay?: string; // base64 PNG
+  detector_overlay?: string | null;
+};
+
+export type AnalysisMeta = {
+  detector?: { error?: string | null; model?: string | null; count?: number };
+  image_size?: { width: number; height: number };
+  [key: string]: unknown;
 };
 
 export type AnalysisResponse = {
@@ -24,7 +30,7 @@ export type AnalysisResponse = {
     classifier_hf: boolean;
     heuristic: boolean;
   };
-  meta?: Record<string, unknown>;
+  meta?: AnalysisMeta;
   lesions?: LesionReport;
 };
 

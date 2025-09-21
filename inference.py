@@ -36,11 +36,14 @@ from transformers import pipeline as hf_pipeline  # type: ignore
 
 _HF_PIPELINES: Dict[str, Any] = {}
 _HF_ERRORS: Dict[str, str] = {}
+_USE_HF = os.environ.get("SKINPRO_USE_HF", "0").lower() in {"1", "true", "yes"}
 _HF_CANDIDATES = [mid for mid in [
     os.environ.get("SKINPRO_HF_MODEL"),
     "imfarzanansari/skintelligent-acne",
     "afscomercial/dermatologic",
 ] if mid]
+if not _USE_HF:
+    _HF_CANDIDATES = []
 
 _DETECTOR_SESSION: Optional[Any] = None
 _DETECTOR_ERROR: Optional[str] = None
@@ -288,7 +291,8 @@ def analyze_image(pil_img: Image.Image) -> Dict[str, Any]:
     if onnx_pred is not None:
         preds.append(onnx_pred)
 
-    preds.extend(_run_hf_models(img))
+    if _USE_HF:
+        preds.extend(_run_hf_models(img))
 
     inflamed_pct = compute_redness_heatmap(img)
     detector_regions = _run_lesion_detector(img)

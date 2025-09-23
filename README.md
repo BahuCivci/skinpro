@@ -125,6 +125,14 @@ python -m streamlit run app.py
   - `src/screens/ResultScreen.tsx`: AI çıktısı ve kutu overlay'i.
   - `src/screens/CoachScreen.tsx`: profil formu, tavsiye isteği.
 
+## 9. Google Play Yayın Akışı (Expo EAS)
+1. **Önkoşullar**: `mobile/app.json` içindeki `expo.android.package` ve `expo.android.versionCode` değerlerini ilk yayın öncesi gözden geçir. Sürüm çıkarken `version` ve `versionCode` değerlerini her seferinde artır.
+2. **Giriş yap**: `npm install -g eas-cli` sonrası `cd mobile && eas login`.
+3. **EAS yapı**: `eas build -p android --profile production` komutu `.aab` (varsayılan) üretir. İhtiyaç olursa `--profile preview` ile `.apk` test build’i al.
+4. **İndir & test et**: Expo build panelinden dosyayı indir, fiziksel cihaz veya Firebase Test Lab (opsiyonel) ile doğrula.
+5. **Play Console**: Uygulamayı oluştur, veri güvenliği / içerik derecelendirme formlarını doldur, mağaza görsellerini yükle. Ardından yeni bir sürüm açıp EAS’in ürettiği `.aab` dosyasını yükle.
+6. **Sonraki sürümler**: Her yayın öncesi `expo version` değerini güncelle, `eas build -p android --profile production` ile yeni build üret ve Play Console’da `versionCode` çakışmalarını önlemek için otomatik artan değeri kullan.
+
 
 ---
 Sorular veya yeni veri ile fine-tuning ihtiyacı oluşursa `detector/scripts/train_detector.py` ve `detector/scripts/eval_detector.py` script’lerini kullanarak süreci tekrarlayabilirsin.

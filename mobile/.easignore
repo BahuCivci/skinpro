@@ -1,0 +1,11 @@
+# Exclude local caches and installed dependencies; EAS Build reinstalls them.
+node_modules
+.expo
+.expo-shared
+
+# macOS / editor artefacts
+.DS_Store
+*.log
+
+# Keep the lockfile so builds stay reproducible
+!package-lock.json
